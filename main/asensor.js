@@ -44,56 +44,14 @@ let personasEnAscensor =[]
 const pisos = [1,2,3,4,5,6,7,8,9,10]
 
 function sigoSibuendoOno (){
-    console.log(pisoAsensor)
     personas.some(persona => {
         if (persona.pisoInicial != 'Recogido' || pisoAsensor<=persona.pisoFinal){
             revisionPisosSubida()
+                    console.log('Piso Asensor: '+pisoAsensor)
             return true; // Esto rompe el ciclo
         }    
         return false; // Continúa iterando
     });
-}
-function sigoBajandoOno (){
-    console.log(pisoAsensor)
-    personas.some(persona => {
-        if (persona.pisoFinal != 'Entregado'){
-            revisionPisosbajada()
-            return true; // Esto rompe el ciclo
-        }    
-        return false; // Continúa iterando
-    });
-}
-
-function activarIntervalo(){
-     interval = setInterval(sigoSibuendoOno,50)
-}
-function activarIntervalo2(){
-     interval2 = setInterval(sigoBajandoOno,50)
-}
-
-// revisionPisosSubida()
-// revisionPisosbajada()
-
-console.log('Tiempo: '+tiempo)
-
-function revisionPisosSubida(){
-    // for (let i = 0; i < 10; i++) {
-        subirUnPiso()
-        tiempo++
-    //         console.log(paradasasensor)
-    // console.log(personas)
-    // // return pisoAsensor
-    // }
-    console.log('Paradas Ascensor: '+paradasasensor)
-    // console.log(personas)
-    // return pisoAsensor
-}
-function revisionPisosbajada(){
-    // for (let i = 0; i < 10; i++) {
-        bajarUnPiso()
-        tiempo++
-    // }
-    console.log('Paradas Ascensor: '+paradasasensor)
 }
 function subirUnPiso() {
         personas.forEach(persona => {      
@@ -118,12 +76,38 @@ function subirUnPiso() {
             clearInterval(interval)
         }
 }
-function revisarPiso(pisoArevisar){
-    if (pisoArevisar==10) {
-       console.log(pisoAsensor)
-        // bajarUnPiso()
-    }
+function sigoBajandoOno (){
+
+    personas.some(persona => {
+
+        if (persona.pisoFinal != 'Entregado'){
+            revisionPisosbajada()
+                        console.log('Piso Asensor: '+pisoAsensor)
+            return true; // Esto rompe el ciclo
+        }    
+        return false; // Continúa iterando
+    });
 }
+
+function activarIntervalo(){
+     interval = setInterval(sigoSibuendoOno,50)
+}
+function activarIntervalo2(){
+     interval2 = setInterval(sigoBajandoOno,50)
+}
+console.log('Tiempo: '+tiempo)
+
+function revisionPisosSubida(){
+        subirUnPiso()
+        tiempo++
+    console.log('Paradas Ascensor: '+paradasasensor)
+}
+function revisionPisosbajada(){
+        bajarUnPiso()
+        tiempo++
+    console.log('Paradas Ascensor: '+paradasasensor)
+}
+
 function bajarUnPiso() {
     personas.forEach(persona => {
         if (persona.pisoFinal == pisoAsensor){
