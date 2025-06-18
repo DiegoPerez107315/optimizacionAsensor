@@ -37,6 +37,7 @@ const Juana = new Persona
     7
 );
 
+
 const personas = [me, Carla, Pedro, Juana];
 console.log(personas)
 let personasEnAscensor =[]
@@ -54,6 +55,9 @@ function sigoSibuendoOno (){
     });
 }
 function subirUnPiso() {
+            if (pisoAsensor==10){
+            clearInterval(interval)
+        }
         personas.forEach(persona => {      
             if (persona.pisoInicial == pisoAsensor){
                 persona.pisoInicial = 'Recogido'
@@ -72,14 +76,10 @@ function subirUnPiso() {
         if (pisoAsensor<10){
             pisoAsensor++
         }
-        if (pisoAsensor==10){
-            clearInterval(interval)
-        }
+
 }
 function sigoBajandoOno (){
-
     personas.some(persona => {
-
         if (persona.pisoFinal != 'Entregado'){
             revisionPisosbajada()
                         console.log('Piso Asensor: '+pisoAsensor)
@@ -109,6 +109,9 @@ function revisionPisosbajada(){
 }
 
 function bajarUnPiso() {
+            if (pisoAsensor==1){
+            clearInterval(interval2)
+        }
     personas.forEach(persona => {
         if (persona.pisoFinal == pisoAsensor){
             persona.pisoFinal = 'Entregado'
@@ -119,9 +122,7 @@ function bajarUnPiso() {
         if (pisoAsensor>1){
             pisoAsensor--
         }
-        if (pisoAsensor==1){
-            clearInterval(interval2)
-        }
+
 }
 function mostrarMensajeFinal(){
     console.log('Todos los pasajeros fueron entregados')
