@@ -36,8 +36,6 @@ const Juana = new Persona
     8,
     7
 );
-
-
 const personas = [me, Carla, Pedro, Juana];
 console.log(personas)
 let personasEnAscensor =[]
@@ -47,22 +45,19 @@ const pisos = [1,2,3,4,5,6,7,8,9,10]
 function sigoSibuendoOno (){
     personas.some(persona => {
         if (persona.pisoInicial != 'Recogido' || pisoAsensor<=persona.pisoFinal){
+            console.log('Piso Asensor: '+pisoAsensor)
             revisionPisosSubida()
-                    console.log('Piso Asensor: '+pisoAsensor)
             return true; // Esto rompe el ciclo
-        }    
-        return false; // Continúa iterando
+        }  
     });
 }
-function subirUnPiso() {
-            if (pisoAsensor==10){
-            clearInterval(interval)
-        }
+function revisionPisosSubida(){
         personas.forEach(persona => {      
             if (persona.pisoInicial == pisoAsensor){
                 persona.pisoInicial = 'Recogido'
                 pasajeroAsensor++
                 paradasasensor++
+                console.log('Paradas Ascensor: '+paradasasensor)
                 personasEnAscensor.push(persona)
             }
         });
@@ -76,54 +71,39 @@ function subirUnPiso() {
         if (pisoAsensor<10){
             pisoAsensor++
         }
-
+        tiempo++
+    sigoSibuendoOno()
 }
 function sigoBajandoOno (){
     personas.some(persona => {
         if (persona.pisoFinal != 'Entregado'){
+            console.log('Piso Asensor: '+pisoAsensor)
             revisionPisosbajada()
-                        console.log('Piso Asensor: '+pisoAsensor)
             return true; // Esto rompe el ciclo
         }    
-        return false; // Continúa iterando
+        mostrarMensajeFinal();
     });
 }
-
-function activarIntervalo(){
-     interval = setInterval(sigoSibuendoOno,50)
-}
-function activarIntervalo2(){
-     interval2 = setInterval(sigoBajandoOno,50)
-}
-console.log('Tiempo: '+tiempo)
-
-function revisionPisosSubida(){
-        subirUnPiso()
-        tiempo++
-    console.log('Paradas Ascensor: '+paradasasensor)
-}
 function revisionPisosbajada(){
-        bajarUnPiso()
-        tiempo++
-    console.log('Paradas Ascensor: '+paradasasensor)
-}
-
-function bajarUnPiso() {
-            if (pisoAsensor==1){
-            clearInterval(interval2)
-        }
     personas.forEach(persona => {
         if (persona.pisoFinal == pisoAsensor){
             persona.pisoFinal = 'Entregado'
             pasajeroAsensor--
             paradasasensor++
+            console.log('Paradas Ascensor: '+paradasasensor)
         }
         });
         if (pisoAsensor>1){
             pisoAsensor--
         }
-
+        tiempo++
+    sigoBajandoOno()
 }
+
 function mostrarMensajeFinal(){
-    console.log('Todos los pasajeros fueron entregados')
+    personas.forEach(persona => {
+        if (persona.pisoFinal != 'Entregado'){
+            console.log(`${persona.nombre} no fue entregado en el piso ${persona.pisoFinal}`);
+        }
+})
 }
