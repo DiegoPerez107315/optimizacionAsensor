@@ -1,3 +1,5 @@
+const pantallaUno = document.getElementById('pantalla-uno');
+
 let pisoAsensor = 1
 let pasajeroAsensor = 0
 let paradasasensor = 0
@@ -50,11 +52,13 @@ function sigoSibuendoOno (){
             return true; // Esto rompe el ciclo
         }  
     });
+    sigoBajandoOno ()
 }
 function revisionPisosSubida(){
         personas.forEach(persona => {      
             if (persona.pisoInicial == pisoAsensor){
                 persona.pisoInicial = 'Recogido'
+                console.log(`${persona.nombre} ha sido recogido en el piso ${pisoAsensor}`);
                 pasajeroAsensor++
                 paradasasensor++
                 console.log('Paradas Ascensor: '+paradasasensor)
@@ -64,6 +68,7 @@ function revisionPisosSubida(){
         personasEnAscensor.forEach(persona => {
             if (persona.pisoFinal == pisoAsensor){
                 persona.pisoFinal = 'Entregado'
+                console.log(`${persona.nombre} ha sido entregado en el piso ${pisoAsensor}`);
                 pasajeroAsensor--
                 paradasasensor++
             }
@@ -81,13 +86,16 @@ function sigoBajandoOno (){
             revisionPisosbajada()
             return true; // Esto rompe el ciclo
         }    
-        mostrarMensajeFinal();
     });
+    mostrarMensajeFinal();
+    pantallaUno.innerHTML = `Tiempo total: ${tiempo} segundos<br>Paradas totales: ${paradasasensor}`;
+
 }
 function revisionPisosbajada(){
     personas.forEach(persona => {
         if (persona.pisoFinal == pisoAsensor){
             persona.pisoFinal = 'Entregado'
+            console.log(`${persona.nombre} ha sido entregado en el piso ${pisoAsensor}`);
             pasajeroAsensor--
             paradasasensor++
             console.log('Paradas Ascensor: '+paradasasensor)
@@ -99,7 +107,6 @@ function revisionPisosbajada(){
         tiempo++
     sigoBajandoOno()
 }
-
 function mostrarMensajeFinal(){
     personas.forEach(persona => {
         if (persona.pisoFinal != 'Entregado'){
